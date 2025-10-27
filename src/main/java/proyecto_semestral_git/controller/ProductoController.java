@@ -25,7 +25,7 @@ public class ProductoController {
         return new ArrayList<>(repo.values());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/obetener/{id}")
     public ResponseEntity<ProductoModel> obtener(@PathVariable int id) {
         ProductoModel p = repo.get(id);
         if (p == null) {
@@ -34,7 +34,7 @@ public class ProductoController {
         return ResponseEntity.ok(p);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<ProductoModel> crear(@RequestBody ProductoModel producto) {
         int id = idGenerator.getAndIncrement();
         producto.setId(id);
@@ -44,7 +44,7 @@ public class ProductoController {
         return new ResponseEntity<>(producto, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<ProductoModel> actualizar(@PathVariable int id, @RequestBody ProductoModel producto) {
         ProductoModel existente = repo.get(id);
         if (existente == null) {
@@ -58,7 +58,7 @@ public class ProductoController {
         return ResponseEntity.ok(existente);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id) {
         ProductoModel removed = repo.remove(id);
         if (removed == null) {
